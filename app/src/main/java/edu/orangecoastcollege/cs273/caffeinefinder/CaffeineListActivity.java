@@ -78,7 +78,7 @@ public class CaffeineListActivity extends AppCompatActivity
 
         //DONE: Make a LocationRequest every 30 seconds, with a fastest interval of 1 second with high accuracy
         mLocationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(30 * 1000)
                 .setFastestInterval(1 * 1000);
 
@@ -157,6 +157,7 @@ public class CaffeineListActivity extends AppCompatActivity
                     COARSE_LOCATION_REQUEST_CODE);
             return;
         }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         handleNewLocation(mLastLocation);
     }
@@ -171,6 +172,7 @@ public class CaffeineListActivity extends AppCompatActivity
                 mLastLocation.setLatitude(0.0);
                 mLastLocation.setLongitude(0.0);
             } else {
+                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
                 mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             }
             handleNewLocation(mLastLocation);
